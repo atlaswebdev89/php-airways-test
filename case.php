@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 error_reporting(E_ALL);
 // Вывод ошибок 
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 // Включение лога ошибок и указания файла для записи.
 ini_set('log_errors', 'On');
 ini_set('error_log', 'logs.log');
@@ -75,6 +75,7 @@ try {
 		return $result;
 	}
 
+	// Получение всех возможных марштуров
 	$result = [];
 	foreach ($flights as $key => $item) {
 		$result[] = getWays($flights, $item);
@@ -86,10 +87,9 @@ try {
 		return abs(strtotime($array[0]['depart']) - strtotime($array[count($array) - 1]['arrival']));
 	}
 
-	$ret = array_map("delay", $result);
-	arsort($ret); // Сохраняет соотвествие значения и ключа
-	$keyLong = array_key_first($ret);
-
+	$wayTime = array_map("delay", $result);
+	arsort($wayTime); // Сохраняет соотвествие значения и ключа
+	$keyLong = array_key_first($wayTime);
 
 	echo "По указанному набору рейсов самый продолжительный маршрут будет такой:" . PHP_EOL;
 	foreach ($result[$keyLong] as $key => $value) {
