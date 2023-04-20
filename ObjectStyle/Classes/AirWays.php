@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace Airways;
 
-class Airways
+class AirWays
 {
-	protected $waysArr = [];
+	protected array $waysArr=[];
 
-	public function __construct(array $data = null)
+    public function __construct(array $data = null)
 	{
-		if (isset($data) && !empty($data)) {
+		if (!empty($data)) {
 			$this->waysArr = $data;
 		} else
-			throw new \Exception("Set in constructor class array air ways");
+			throw new \Exception ("Set in constructor class array air ways");
 	}
 
 	public function maxLongWay(): array
 	{
 		// Получение всех возможных марштуров
 		$result = [];
-		foreach ($this->waysArr as $key => $item) {
+		foreach ($this->waysArr as $item) {
 			$result[] = $this->getWays($this->waysArr, $item);
 		}
 		$wayTime = $this->wayTime($result);
@@ -29,7 +29,7 @@ class Airways
 		return $result[$keyLong];
 	}
 
-	protected function getWays(array $data, array $query)
+	protected function getWays(array $data, array $query):array
 	{
 		$result[] = $query;
 
@@ -37,6 +37,7 @@ class Airways
 			if ($number['from'] == $query['to'] && strtotime($number['depart']) > strtotime($query['arrival'])) {
 				return true;
 			}
+            return FALSE;
 		});
 
 		$max = array_reduce($positive, function ($acc, $item) {
@@ -50,7 +51,7 @@ class Airways
 			return $acc;
 		});
 
-		if (isset($max) && !empty($max) && ($this->getNextWay($max, $data) > 0)) {
+		if (!empty($max) && ($this->getNextWay($max, $data) > 0)) {
 			$arr = $this->getWays($data, $max);
 			$result = array_merge($result, $arr);
 		} elseif ($max) {
@@ -85,7 +86,7 @@ class Airways
 		return $result;
 	}
 
-	public function viewCli(array $array)
+	public function viewCli(array $array):void
 	{
 		echo "По указанному набору рейсов самый продолжительный маршрут будет такой:" . PHP_EOL;
 		foreach ($array as $key => $value) {

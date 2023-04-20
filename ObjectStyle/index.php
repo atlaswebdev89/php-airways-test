@@ -1,9 +1,10 @@
 <?php
 
 declare(strict_types=1);
+
 error_reporting(E_ALL);
 // Вывод ошибок 
-ini_set('display_errors', 0);
+ini_set('display_errors', "0");
 // Включение лога ошибок и указания файла для записи.
 ini_set('log_errors', 'On');
 ini_set('error_log', 'logs.log');
@@ -32,7 +33,7 @@ try {
 		],
 	];
 
-	$ways = new \Airways\Airways($flights);
+	$ways = new Airways\Airways($flights);
 	// Получаем самый продолжительный маршрут
 	$maxWay = $ways->maxLongWay();
 	// Выводим полученные данные

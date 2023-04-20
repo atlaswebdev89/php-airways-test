@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 error_reporting(E_ALL);
 // Вывод ошибок 
-ini_set('display_errors', 0);
+ini_set('display_errors', "0");
 // Включение лога ошибок и указания файла для записи.
 ini_set('log_errors', 'On');
 ini_set('error_log', 'logs.log');
@@ -49,10 +49,12 @@ try {
 	{
 		$result[] = $query;
 
-		$positive = array_filter($data, function ($number) use ($query) {
+		$positive = array_filter($data, function ($number) use ($query){
 			if ($number['from'] == $query['to'] && strtotime($number['depart']) > strtotime($query['arrival'])) {
-				return true;
-			}
+				return TRUE;
+			}else {
+                return FALSE;
+            }
 		});
 
 		$max = array_reduce($positive, function ($acc, $item) {
@@ -66,7 +68,7 @@ try {
 			return $acc;
 		});
 
-		if (isset($max) && !empty($max) && (getNextWay($max, $data) > 0)) {
+		if (!empty($max) && (getNextWay($max, $data) > 0)) {
 			$arr = getWays($data, $max);
 			$result = array_merge($result, $arr);
 		} elseif ($max) {
