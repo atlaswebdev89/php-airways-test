@@ -52,9 +52,9 @@ try {
 		$positive = array_filter($data, function ($number) use ($query){
 			if ($number['from'] == $query['to'] && strtotime($number['depart']) > strtotime($query['arrival'])) {
 				return TRUE;
-			}else {
+			}else    {
                 return FALSE;
-            }
+             }
 		});
 
 		$max = array_reduce($positive, function ($acc, $item) {
